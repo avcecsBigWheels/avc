@@ -36,7 +36,7 @@ private:
 	const int cam_height = 240;
 	const int v_left_go = 52;
 	const int v_right_go = 43;
-	double kp = 0.05;
+	double kp = 0.001;
 	double kd = 0.001;
 	bool line_present = true;
 public:
