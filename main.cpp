@@ -96,8 +96,9 @@ int Robot :: MeasureLine(){
 			line_present = true;
 		}
 		//line_error += line[i] * (i - ((cam_width - 1) / 2));
-		line_error += line * (i - ((cam_width - 1) / 2));
+		line_error += line * (i - ((cam_width - 1.0)/2.0));
 		printf ("Line Error!!!!: %d\n", line_error);
+		sleep1(1000);
 	}	
 	clock_gettime (CLOCK_MONOTONIC, &ts_end);
 	return 0;
