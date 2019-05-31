@@ -22,8 +22,8 @@ int fixedSpeed = 63;
 class Robot {  
 private:
 	int v_left, v_right, cam_tilt;
-	int dv;
-	int de;
+	float dv;
+	float de;
 	long dt;
 	int error;
 	struct timespec ts_start;
@@ -76,7 +76,7 @@ void Robot::goForward () {
 
 int Robot :: MeasureLine(){
 	int line [cam_width] = {};
-		int offCentre = 0;
+		line_error = 0;
 		float whiteness = 0;
 		line_present = false;
 		for (int i = 0; i < cam_width; i++) {
@@ -89,19 +89,19 @@ int Robot :: MeasureLine(){
 				line[i] = 1;
 		}
 		else {line[i] = 0; line_present = true;}
-			offCentre += line[i] * (i - ((int) ((cam_width - 1) / 2)));
+			line_error += line[i] * (i - ((int) ((cam_width - 1) / 2)));
 		}
 		clock_gettime (CLOCK_MONOTONIC, &ts_end);
-		return offCentre;
+		return 0;
 }
 int Robot::FollowLine () {
-	line_error = MeasureLine ();	
+	MeasureLine ();	
 	if (line_present) {
-		dv = (int) (line_error * kp);
-		de = (int)(line_error - previous_line_error);
+		dv = (line_error * kp);
+		de = (line_error - previous_line_error);
 		dt = (ts_end.tv_sec - ts_start.tv_sec) * 1000000000 +
 		ts_end.tv_nsec - ts_start.tv_nsec;
-		error = dv + (kd * (de/dt));
+		error = (int)(dv + (kd * (de/dt)));
 		v_left = v_left_go + error;
 		v_right = v_right_go + error;
 		if (v_left > 65) {
