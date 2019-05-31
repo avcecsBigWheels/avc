@@ -88,8 +88,8 @@ int Robot :: MeasureLine(){
 			if (get_pixel (cam_height/2, i, 3) > whiteness - 15) {
 				line[i] = 1;
 		}
-		else {line[i] = 0; line_present = true;}
-			line_error += line[i] * (i - ((int) ((cam_width - 1) / 2)));
+			else {line[i] = 0; line_present = true;}
+			line_error += line[i] * (i - ((cam_width - 1) / 2));
 		}
 		clock_gettime (CLOCK_MONOTONIC, &ts_end);
 		return 0;
