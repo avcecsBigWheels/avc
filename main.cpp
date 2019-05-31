@@ -80,13 +80,13 @@ int Robot :: MeasureLine(){
 	line_error = 0;
 	float whiteness = 0;
 	line_present = false;
-	for (int i = 0; i < cam_width; i++) {
+	for (int i = 0; i < 320; i++) {
 		whiteness += get_pixel (cam_height/2, i, 3);
 	}
 	whiteness /= cam_width;
 	clock_gettime (CLOCK_MONOTONIC, &ts_start);
-	for (int i = 0; i < cam_width; i++) {
-		if (get_pixel (cam_height/2, i, 3) > whiteness - 15) {
+	for (int i = 0; i < 320; i++) {
+		if (get_pixel (120, i, 3) > whiteness - 15) {
 			//line[i] = 1;
 			line = 1;
 	}
@@ -96,7 +96,7 @@ int Robot :: MeasureLine(){
 			line_present = true;
 		}
 		//line_error += line[i] * (i - ((cam_width - 1) / 2));
-		line_error += line * (i - ((cam_width - 1.0)/2.0));
+		line_error +=(double) (line * (i - 159.5));
 		printf ("Line Error!!!!: %d\n", line_error);
 		sleep1(1000);
 	}	
