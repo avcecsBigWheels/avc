@@ -148,14 +148,14 @@ int main() {
 	sleep1(2000);
 	
 	
-	/*while(true){ // sets up a loop for the rest of our stuff to be in
+	while(true){ // sets up a loop for the rest of our stuff to be in
 		take_picture(); // this should call camera to take a ss.
 		update_screen();
 		robot.FollowLine();
 		
 		// for(x pixel) decide which direction to move
 		
-		}*/
+		}
 	
 	}
 		
