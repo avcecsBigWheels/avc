@@ -97,6 +97,9 @@ int Robot :: MeasureLine(){
 		}
 		//line_error += line[i] * (i - ((cam_width - 1) / 2));
 		line_error += (double)(line * (i - 159.5));
+		double centre = i - 159.5;
+		printf ("Line: %d\n", line);
+		printf ("Centre: %.2f\n", centre);
 		printf ("Line Error!!!!: %d\n", line_error);
 	}	
 	clock_gettime (CLOCK_MONOTONIC, &ts_end);
