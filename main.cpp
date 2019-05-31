@@ -78,30 +78,14 @@ int Robot :: MeasureLine(){
 	//int line [cam_width] = {};
 	take_picture();
 	int line;
-	int count = 0; 
-	int junction = 0;
 	line_error = 0;
 	float whiteness = 0;
-	float vertWhiteness = 0;
 	line_present = false;
 	for (int i = 0; i < 320; i++) {
 		whiteness += get_pixel (cam_height/2, i, 3);
 	}
 	whiteness /= cam_width;
-	for (int i = 0; i < 320; i++) {
-		vertWhiteness += get_pixel (cam_height/2, i, 3);
-	}
-	vertWhiteness /= cam_width;
 	clock_gettime (CLOCK_MONOTONIC, &ts_start);
-	for (int i = 0; i < 240; i++) {
-		if (get_pixel (i, 160, 3) > whiteness - 15) {
-			line = 0;
-		}
-		else {
-			line = 1;
-			line_present = true;
-			count ++;
-		}
 	for (int i = 0; i < 320; i++) {
 		if (get_pixel (120, i, 3) > whiteness - 15) {
 			//line[i] = 1;
@@ -111,7 +95,6 @@ int Robot :: MeasureLine(){
 			//line[i] = 0; 
 			line = 1;
 			line_present = true;
-			count ++;
 		}
 		//line_error += line[i] * (i - ((cam_width - 1) / 2));
 		line_error += (double)(line * (i - 159.5));
@@ -119,14 +102,7 @@ int Robot :: MeasureLine(){
 		printf ("Line: %d\n", line);
 		printf ("Centre: %.2f\n", centre);
 		printf ("Line Error!!!!: %d\n", line_error);
-	}
-	if (count > 100 && count < 200) {
-		junction = 1;
-	}
-	if (count <= 200 && count <= 320) {
-		junction = 2;
-	}
-	
+	}	
 	clock_gettime (CLOCK_MONOTONIC, &ts_end);
 	return 0;
 }
