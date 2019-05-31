@@ -95,7 +95,7 @@ int Robot :: MeasureLine(){
 		return offCentre;
 }
 int Robot::FollowLine () {
-	MeasureLine ();
+	line_error = MeasureLine ();	
 	if (line_present) {
 		dv = (int) (line_error * kp);
 		de = (int)(line_error - previous_line_error);
