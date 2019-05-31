@@ -75,25 +75,32 @@ void Robot::goForward () {
 }
 
 int Robot :: MeasureLine(){
-	int line [cam_width] = {};
-		line_error = 0;
-		float whiteness = 0;
-		line_present = false;
-		for (int i = 0; i < cam_width; i++) {
-			whiteness += get_pixel (cam_height/2, i, 3);
+	//int line [cam_width] = {};
+	int line;
+	line_error = 0;
+	float whiteness = 0;
+	line_present = false;
+	for (int i = 0; i < cam_width; i++) {
+		whiteness += get_pixel (cam_height/2, i, 3);
+	}
+	whiteness /= cam_width;
+	clock_gettime (CLOCK_MONOTONIC, &ts_start);
+	for (int i = 0; i < cam_width; i++) {
+		if (get_pixel (cam_height/2, i, 3) > whiteness - 15) {
+			//line[i] = 1;
+			line = 1;
+	}
+		else {
+			//line[i] = 0; 
+			line = 0;
+			line_present = true;
 		}
-		whiteness /= cam_width;
-		clock_gettime (CLOCK_MONOTONIC, &ts_start);
-		for (int i = 0; i < cam_width; i++) {
-			if (get_pixel (cam_height/2, i, 3) > whiteness - 15) {
-				line[i] = 1;
-		}
-			else {line[i] = 0; line_present = true;}
-			line_error += line[i] * (i - ((cam_width - 1) / 2));
-		}
+		//line_error += line[i] * (i - ((cam_width - 1) / 2));
+		line_error += line * (i - ((cam_width - 1) / 2));
 		printf ("Line Error!!!!: %d\n", line_error);
-		clock_gettime (CLOCK_MONOTONIC, &ts_end);
-		return 0;
+	}	
+	clock_gettime (CLOCK_MONOTONIC, &ts_end);
+	return 0;
 }
 int Robot::FollowLine () {
 	MeasureLine ();	
@@ -118,7 +125,7 @@ int Robot::FollowLine () {
 			v_right = 30;
 		}
 		previous_line_error = line_error;
-		printf ("Error: %d\nLine Error: %d\n", error, line_error);
+		printf ("Error: %d\n", error);
 		printf ("V_left: %d\nV_right: %d\n", v_left, v_right);
 		SetMotors ();
 	}
