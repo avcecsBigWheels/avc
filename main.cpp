@@ -117,7 +117,8 @@ int Robot::FollowLine () {
 			v_right = 30;
 		}
 		previous_line_error = line_error;
-	//cout << " line_error = " << line_error << " dv= " << dv;
+		printf ("Line Error: %d", error);
+		printf ("V_left: %d\nV_right: %d", v_left, v_right);
 		SetMotors ();
 	}
 	else {
