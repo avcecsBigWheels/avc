@@ -76,6 +76,7 @@ void Robot::goForward () {
 
 int Robot :: MeasureLine(){
 	//int line [cam_width] = {};
+	take_picture();
 	int line;
 	line_error = 0;
 	float whiteness = 0;
@@ -88,11 +89,11 @@ int Robot :: MeasureLine(){
 	for (int i = 0; i < 320; i++) {
 		if (get_pixel (120, i, 3) > whiteness - 15) {
 			//line[i] = 1;
-			line = 1;
+			line = 0;
 	}
 		else {
 			//line[i] = 0; 
-			line = 0;
+			line = 1;
 			line_present = true;
 		}
 		//line_error += line[i] * (i - ((cam_width - 1) / 2));
@@ -106,6 +107,7 @@ int Robot :: MeasureLine(){
 	return 0;
 }
 int Robot::FollowLine () {
+	 
 	MeasureLine ();	
 	if (line_present) {
 		dv = (line_error * kp);
@@ -161,8 +163,7 @@ int main() {
 	
 	
 	while(true){ // sets up a loop for the rest of our stuff to be in
-		take_picture(); // this should call camera to take a ss.
-		update_screen();
+		// this should call camera to take a ss.
 		robot.FollowLine();
 		
 		// for(x pixel) decide which direction to move
