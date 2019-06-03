@@ -185,7 +185,7 @@ void Robot::MeasureMaze () {
 	rLine = rightLine > 50;
 	goStraight = ((lLine && !rLine) || (!lLine && rLine));
 	junction = vLine && hLine;
-	deadEnd = !(vLine || hLine);
+	deadEnd = lineH < 20 && lineV < 20;
 	printf ("Vertical Amnt: %d\nHorizontal Amnt: %d\n", lineV, lineH);
 }
 int Robot::FollowLine () {
