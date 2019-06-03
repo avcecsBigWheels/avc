@@ -266,7 +266,7 @@ void Robot::maze() {
 		SetMotors();
 		sleep1 (1000);
 	}
-	else if (goStright) {
+	else if (goStraight) {
 		goForward();
 		sleep1 (1500);
 	}
