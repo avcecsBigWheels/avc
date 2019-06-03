@@ -186,7 +186,7 @@ void Robot::MeasureMaze () {
 	lLine = leftLine > 70;
 	rLine = rightLine > 70;
 	goStraight = ((lLine && !rLine) || (!lLine && rLine)) && lineV > 35;
-	if (!goStraight) {
+	if (!goStraight && lineV < 5) {
 		turnLeft = leftLine > 20;
 		if (!turnLeft) {			
 			turnRight = rightLine > 20;
