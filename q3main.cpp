@@ -187,8 +187,10 @@ void Robot::MeasureMaze () {
 	rLine = rightLine > 70;
 	goStraight = ((lLine && !rLine) || (!lLine && rLine)) && lineV > 35;
 	if (!goStraight) {
-		turnLeft = leftLine > 35;
-		turnRight = rightLine > 35;
+		turnLeft = leftLine > 20;
+		if (!turnLeft) {			
+			turnRight = rightLine > 20;
+		}
 	}
 	junction = lineV > 65 && lineH > 140;
 	deadEnd = lineH < 5 && lineV < 5;
@@ -276,15 +278,15 @@ void Robot::maze() {
 	}
 	else if (turnLeft) {
 		sleep1 (100);
-		v_right = 58;
-		v_left = 54;
+		v_right = 42;
+		v_left = 35;
 		sleep1 (100);
 		printf ("Turn Left\n");
 	}
 	else if (turnRight) {
 		sleep1 (100);
-		v_right = 44;
-		v_left = 37;
+		v_right = 58;
+		v_left = 50;
 		sleep1 (75);
 		printf ("Turn Right\n");
 	}
