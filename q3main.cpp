@@ -50,6 +50,7 @@ private:
 	bool deadEnd;
 	bool goStraight;
 	bool endRun;
+	bool turn;
 public:
 	//Rob () {};    //default constructor
 	int InitHardware ();
@@ -179,8 +180,9 @@ void Robot::MeasureMaze () {
 	}
 	hLine = lineH > 20;
 	vLine = lineV > 20;
-	lLine = leftLine > 50;
-	rLine = rightLine > 50;
+	lLine = leftLine > 30;
+	rLine = rightLine > 30;
+	turn = rLine || lLine;
 	goStraight = ((lLine && !rLine) || (!lLine && rLine));
 	junction = vLine && hLine;
 	deadEnd = !(vLine || hLine);
@@ -248,7 +250,7 @@ void Robot::MeasureColor () {
 void Robot::maze() {
 	MeasureColor();
 	MeasureMaze();
-	if (!(junction || deadEnd || goStraight)) {
+	if ((!(junction || deadEnd || goStraight)) || turn) {
 		FollowLine();
 	}
 	else if (junction) {
