@@ -124,11 +124,11 @@ void Robot::MeasureMaze () {
 	//variable setting
 	junction = false;
 	deadEnd = false;
-	goStright = false;
+	goStraight = false;
 	line_present = false;	
 	
 	vertLine [120] = {};
-	horiZLine [320] = {};
+	horizLine [320] = {};
 	
 	vLine = false;
 	hLine = false;
@@ -183,7 +183,7 @@ void Robot::MeasureMaze () {
 	vLine = lineV > 50;
 	lLine = leftLine > 50;
 	rLine = rightLine > 50;
-	goStright = ((lLine && !rLine) || (!lLine && rLine));
+	goStraight = ((lLine && !rLine) || (!lLine && rLine));
 	junction = vLine && hLine;
 	deadEnd = !(vLine && hLine);
 }
