@@ -267,8 +267,8 @@ void Robot::maze() {
 		sleep1 (1000);
 	}
 	else if (goStraight) {
-		goForward();
-		sleep1 (1500);
+		//goForward();
+		//sleep1 (1500);
 	}
 }
 
