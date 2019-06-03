@@ -141,14 +141,18 @@ void Robot::MeasureMaze () {
 	
 	//whiteness check
 	whiteness = 0;	
+	float vertWhiteness = 0;
 	for (int i = 0; i < 320; i++) {
 		whiteness += get_pixel (cam_height/2, i, 3);
+	}
+	for (int i = 120; i < 240; i++) {
+		vertWhiteness += get_pixel (i, 160, 3);
 	}
 	whiteness /= cam_width;
 	
 	//vertical line check
 	for (int i = 120; i < 240; i ++) {
-		if (get_pixel (120, i, 3) > whiteness - 15) {
+		if (get_pixel (120, i, 3) > vertWhiteness - 15) {
 			vertLine[i - 120] = 0;
 		}
 		else {
