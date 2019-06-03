@@ -126,7 +126,7 @@ void Robot::MeasureMaze () {
 	junction = false;
 	deadEnd = false;
 	goStright = false;
-	line_present = false;
+	line_present = false;	
 	
 	vertLine [120] = {};
 	horiZLine [320] = {};
@@ -136,6 +136,8 @@ void Robot::MeasureMaze () {
 	
 	int leftLine = 0;
 	int rightLine = 0;
+	int lineH = 0;
+	int lineV = 0;
 	
 	//whiteness check
 	whiteness = 0;	
@@ -150,10 +152,11 @@ void Robot::MeasureMaze () {
 			vertLine[i - 120] = 0;
 		}
 		else {
-			vertLine [i - 120] = 0;
+			vertLine [i - 120] = 1;
 			line_present = true;
 			vLine = true;
 		}
+		lineV += vertLine [i - 120];
 	}
 	
 	//horizontal line check
@@ -172,7 +175,10 @@ void Robot::MeasureMaze () {
 		else {
 			rightLine += horizLine[i];
 		}
+		lineH += horizLine[i];
 	}
+	hLine = lineH > 100;
+	vLine = lineV > 50;
 	lLine = leftLine > 50;
 	rLine = rightLine > 50;
 	goStright = ((lLine && !rLine) || (!lLine && rLine));
@@ -242,8 +248,24 @@ void Robot::MeasureColor () {
 void Robot::maze() {
 	MeasureColor();
 	MeasureMaze();
-	if (!(junction && deadEnd)) {
+	if (!(junction || deadEnd || goStraight)) {
 		FollowLine();
+	}
+	else if (junction) {
+		sleep1 (250);
+		v_right = v_right_go + 5;
+		v_left = v_left_go + 6;
+		sleep1 (500);
+	}
+	else if (deadEnd) {
+		v_right = v_left_go;
+		v_left = v_right_go;
+		SetMotors();
+		sleep1 (1000);
+	}
+	else if (goStright) {
+		goForward();
+		sleep1 (1500);
 	}
 }
 
@@ -264,13 +286,13 @@ int main() {
 	//robot.goForward();
 	//sleep1(3000);	
 	
-	while (quad2) { // sets up a loop for the rest of our stuff to be in
+	while (quad3) { // sets up a loop for the rest of our stuff to be in
 		// this should call camera to take a ss.
 		take_picture();
 		robot.FollowLine();		
 		// for(x pixel) decide which direction to move		
 	}
-	while (quad3) {
+	while (true) {
 		take_picture();
 		robot.maze();	
 	}	
