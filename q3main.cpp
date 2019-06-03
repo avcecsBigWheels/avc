@@ -181,6 +181,7 @@ void Robot::MeasureMaze () {
 	goStraight = ((lLine && !rLine) || (!lLine && rLine));
 	junction = vLine && hLine;
 	deadEnd = !(vLine || hLine);
+	printf ("Vertical Amnt: %d\nHorizontal Amnt: %d\n", lineV, lineH);
 }
 int Robot::FollowLine () {
 	 
@@ -251,15 +252,15 @@ void Robot::maze() {
 		printf ("Junction\n");
 	}
 	else if (deadEnd) {
-		v_right = 63;
-		v_left = 47;
+		v_right = 58;
+		v_left = 40;
 		SetMotors();
-		sleep1 (375);
+		sleep1 (300);
 		printf ("DeadEnd\n");
 	}
 	else if (goStraight) {
 		goForward();
-		sleep1 (625);
+		sleep1 (325);
 		printf ("Go forward\n");
 	}
 	else {
