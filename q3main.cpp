@@ -252,7 +252,7 @@ void Robot::maze() {
 	if (junction) {
 		sleep1 (150);
 		v_right = 58;
-		v_left = 44;
+		v_left = 50;
 		sleep1 (300);
 		printf ("Junction\n");
 	}
