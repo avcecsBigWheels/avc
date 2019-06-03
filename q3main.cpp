@@ -238,13 +238,13 @@ void Robot::MeasureColor () {
 	red /= 6400;
 	green /= 6400;
 	blue /= 6400;
+
 	if ((red - blue) > 80) {
 		quad2 = false;
 		quad3 = true;
-	}
-	if (quad3 && ((red - blue) > 80)) {
-		endRun = true;
-	}
+		printf("Next quadrant \n");
+		sleep1 (2000);
+	}	
 }
 void Robot::maze() {
 	MeasureColor();
@@ -289,13 +289,13 @@ int main() {
 	//robot.goForward();
 	//sleep1(3000);	
 	
-	while (quad3) { // sets up a loop for the rest of our stuff to be in
+	while (quad2) { // sets up a loop for the rest of our stuff to be in
 		// this should call camera to take a ss.
 		take_picture();
 		robot.FollowLine();		
 		// for(x pixel) decide which direction to move		
 	}
-	while (quad2) {
+	while (quad3) {
 		take_picture();
 		robot.maze();	
 	}	
