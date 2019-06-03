@@ -187,15 +187,13 @@ void Robot::MeasureMaze () {
 	vLine = lineV > 10;
 	lLine = leftLine > 70;
 	rLine = rightLine > 70;
-	if (lineV > 20 && (leftLine > 30 && rightLine < 30 || rightLine > 30 && leftLine < 30) {
+	if (lineV > 20 && (leftLine > 30 && rightLine < 30 || rightLine > 30 && leftLine < 30)) {
 		follow = true;
 	}
 	goStraight = ((lLine && !rLine) || (!lLine && rLine)) && lineV > 35;
-	if (!goStraight && lineV < 5) {
-		turnLeft = leftLine > 20;
-		if (!turnLeft) {			
-			turnRight = rightLine > 20;
-		}
+	if (lineV < 5) {
+		turnLeft = leftLine > 20;			
+		turnRight = rightLine > 20;
 	}
 	junction = lineV > 65 && lineH > 140;
 	deadEnd = lineH < 5 && lineV < 5;
