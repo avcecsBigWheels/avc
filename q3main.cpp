@@ -259,6 +259,7 @@ void Robot::maze() {
 	MeasureMaze();
 	if (follow){
 		FollowLine ();
+		printf ("Follow\n");
 	}
 	else if (goStraight && turnLeft) {
 		sleep1 (75);
@@ -279,7 +280,7 @@ void Robot::maze() {
 		v_right = 54;
 		v_left = 50;
 		SetMotors();
-		sleep1 (400);
+		sleep1 (700);
 		printf ("DeadEnd\n");
 	}
 	else if (goStraight) {
