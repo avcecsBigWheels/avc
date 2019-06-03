@@ -238,16 +238,16 @@ void Robot::MeasureColor () {
 	float red = 0;
 	float green = 0;
 	float blue = 0;
-	for (int i = 120; i < 200; i ++) {
-		for (int k = 80; k < 160; k ++) {
+	for (int i = 80; i < 240; i ++) {
+		for (int k = 60; k < 180; k ++) {
 			red += (float) (get_pixel (k, i, 0));	
 			green += (float) (get_pixel (k, i, 1));	
 			blue += (float) (get_pixel (k, i, 2));	
 		}
 	}
-	red /= 6400;
-	green /= 6400;
-	blue /= 6400;
+	red /= 19200;
+	green /= 19200;
+	blue /= 19200;
 
 	if (((red - blue) > 80) && nextQuad) {
 		quad2 = false;
@@ -266,14 +266,14 @@ void Robot::maze() {
 		sleep1 (100);
 		v_right = 54;
 		v_left = 50;
-		sleep1 (100);
+		sleep1 (65);
 		printf ("Junction\n");
 	}
 	else if (deadEnd) {
 		v_right = 54;
 		v_left = 50;
 		SetMotors();
-		sleep1 (300);
+		sleep1 (250);
 		printf ("DeadEnd\n");
 	}
 	else if (goStraight) {
@@ -285,7 +285,7 @@ void Robot::maze() {
 		v_right = 49;
 		v_left = 56;
 		SetMotors();
-		sleep1 (100);
+		sleep1 (65);
 		printf ("Turn Left\n");
 	}
 	else if (turnRight) {
@@ -293,7 +293,7 @@ void Robot::maze() {
 		v_right = 39;
 		v_left = 48;
 		SetMotors();
-		sleep1 (75);
+		sleep1 (65);
 		printf ("Turn Right\n");
 	}	
 }
