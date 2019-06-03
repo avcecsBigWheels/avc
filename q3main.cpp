@@ -180,7 +180,7 @@ void Robot::MeasureMaze () {
 		lineH += horizLine[i];
 	}
 	hLine = lineH > 60;
-	vLine = lineV > 40;
+	vLine = lineV > 10;
 	lLine = leftLine > 30;
 	rLine = rightLine > 30;
 	goStraight = ((lLine && !rLine) || (!lLine && rLine));
