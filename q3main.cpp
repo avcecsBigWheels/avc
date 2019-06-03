@@ -185,16 +185,14 @@ void Robot::MeasureMaze () {
 	}
 	hLine = lineH > 60;
 	vLine = lineV > 10;
-	lLine = leftLine > 70;
-	rLine = rightLine > 70;
+	lLine = leftLine > 85;
+	rLine = rightLine > 85;
 	if ((lineV > 20 && (leftLine > 80 && rightLine < 80 || rightLine > 80 && leftLine < 80)) || (lineV > 20 && lineH < 40)) {
 		follow = true;
 	}
-	goStraight = ((lLine && !rLine) || (!lLine && rLine)) && lineV > 35;
-	if (lineV < 5) {
-		turnLeft = leftLine > 80;			
-		turnRight = rightLine > 80;
-	}
+	goStraight = lineV > 35 && lineH < 100;
+	turnLeft = leftLine > 80;			
+	turnRight = rightLine > 80;		
 	junction = lineV > 65 && lineH > 140;
 	deadEnd = lineH < 5 && lineV < 5;
 }
@@ -249,7 +247,7 @@ void Robot::MeasureColor () {
 	green /= 19200;
 	blue /= 19200;
 
-	if (((red - blue) > 80) && nextQuad) {
+	if (((red - blue) > 40) && nextQuad) {
 		quad2 = false;
 		quad3 = true;
 		printf("Next quadrant \n");
@@ -261,6 +259,14 @@ void Robot::maze() {
 	MeasureMaze();
 	if (follow){
 		FollowLine ();
+	}
+	else if (goStraight && turnLeft) {
+		sleep1 (100);
+		v_right = 49;
+		v_left = 56;
+		SetMotors();
+		sleep1 (65);
+		printf ("Turn Left\n");
 	}
 	else if (junction) {
 		sleep1 (100);
@@ -324,4 +330,4 @@ int main() {
 		take_picture();
 		robot.maze();	
 	}	
-}	
+}
