@@ -174,8 +174,8 @@ void Robot::MeasureMaze () {
 		}
 		lineH += horizLine[i];
 	}
-	hLine = lineH > 20;
-	vLine = lineV > 20;
+	hLine = lineH > 60;
+	vLine = lineV > 40;
 	lLine = leftLine > 30;
 	rLine = rightLine > 30;
 	goStraight = ((lLine && !rLine) || (!lLine && rLine));
@@ -245,9 +245,9 @@ void Robot::maze() {
 	MeasureMaze();
 	if (junction) {
 		sleep1 (150);
-		v_right = v_right_go + 8;
-		v_left = v_left_go + 9;
-		sleep1 (500);
+		v_right = 58;
+		v_left = 44;
+		sleep1 (300);
 		printf ("Junction\n");
 	}
 	else if (deadEnd) {
