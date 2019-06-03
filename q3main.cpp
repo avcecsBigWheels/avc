@@ -26,6 +26,7 @@ private:
 	int v_left, v_right, cam_tilt;
 	float dv;
 	float de;
+	float whiteness;
 	long dt;
 	int error;
 	struct timespec ts_start;
@@ -40,7 +41,15 @@ private:
 	const int v_right_go = 43;
 	double kp = 0.0008;
 	double kd = 0.0007;
-	bool line_present = true;	
+	bool line_present = true;
+	bool junction;
+	int vertLine [120] = {};
+	int horiZLine [320] = {};
+	bool vLine
+	bool hLine;
+	bool junction;
+	bool deadEnd;
+	bool goStright;
 public:
 	//Rob () {};    //default constructor
 	int InitHardware ();
@@ -49,6 +58,8 @@ public:
 	int FollowLine ();
 	void goForward();
 	void MeasureColor();
+	void maze ();
+	void MeasureMaze();
 	//int forward(int speed);
 };
 
@@ -79,15 +90,16 @@ void Robot::goForward () {
 
 int Robot :: MeasureLine(){
 	//int line [cam_width] = {};
-	take_picture();
 	int line;
-	line_error = 0;
-	float whiteness = 0;
+	line_error = 0;		
 	line_present = false;
-	for (int i = 0; i < 320; i++) {
-		whiteness += get_pixel (cam_height/2, i, 3);
+	if (quad2) {
+		whiteness = 0;
+		for (int i = 0; i < 320; i++) {
+			whiteness += get_pixel (cam_height/2, i, 3);
+		}
+		whiteness /= cam_width;
 	}
-	whiteness /= cam_width;
 	clock_gettime (CLOCK_MONOTONIC, &ts_start);
 	for (int i = 0; i < 320; i++) {
 		if (get_pixel (120, i, 3) > whiteness - 15) {
@@ -108,6 +120,64 @@ int Robot :: MeasureLine(){
 	}	
 	clock_gettime (CLOCK_MONOTONIC, &ts_end);	
 	return 0;
+}
+void Robot::MeasureMaze () {
+	//variable setting
+	junction = false;
+	deadEnd = false;
+	goStright = false;
+	line_present = false;
+	
+	vertLine [120] = {};
+	horiZLine [320] = {};
+	
+	vLine = false;
+	hLine = false;
+	
+	int leftLine = 0;
+	int rightLine = 0;
+	
+	//whiteness check
+	whiteness = 0;	
+	for (int i = 0; i < 320; i++) {
+		whiteness += get_pixel (cam_height/2, i, 3);
+	}
+	whiteness /= cam_width;
+	
+	//vertical line check
+	for (int i = 120; i < 240; i ++) {
+		if (get_pixel (120, i, 3) > whiteness - 15) {
+			vertLine[i - 120] = 0;
+		}
+		else {
+			vertLine [i - 120] = 0;
+			line_present = true;
+			vLine = true;
+		}
+	}
+	
+	//horizontal line check
+	for (int i = 0; i < 320; i++) {
+		if (get_pixel (120, i, 3) > whiteness - 15) {
+			horizLine[i] = 0;
+		}
+		else {
+			horizLine[i] = 1; 
+			line_present = true;
+			hLine = true;
+		}
+		if (i > 160) {
+			leftLine += horizLine [i];
+		}
+		else {
+			rightLine += horizLine[i];
+		}
+	}
+	lLine = leftLine > 50;
+	rLine = rightLine > 50;
+	goStright = ((lLine && !rLine) || (!lLine && rLine));
+	junction = vLine && hLine;
+	deadEnd = !(vLine && hLine);
 }
 int Robot::FollowLine () {
 	 
@@ -161,8 +231,20 @@ void Robot::MeasureColor () {
 	red /= 6400;
 	green /= 6400;
 	blue /= 6400;
-	printf ("Red: %f\nGreen: %f\nBlue: %f\n", red, green, blue);
-	sleep1 (3000);
+	if ((red - blue) > 80) {
+		quad2 = false;
+		quad3 = true;
+	}
+	if (quad3 && ((red - blue) > 80) {
+		endRun = true;
+	}
+}
+void Robot::maze() {
+	MeasureColor();
+	MeasureMaze();
+	if (!(junction && deadEnd)) {
+		FollowLine();
+	}
 }
 
 int main() {
@@ -180,16 +262,16 @@ int main() {
 	//send_to_server(message);// literally a ping pong
 	
 	//robot.goForward();
-	//sleep1(3000);
+	//sleep1(3000);	
 	
-	
-	while(quad2){ // sets up a loop for the rest of our stuff to be in
+	while (quad2) { // sets up a loop for the rest of our stuff to be in
 		// this should call camera to take a ss.
-		robot.FollowLine();
-		
-		// for(x pixel) decide which direction to move
-		
-		}
-	
+		take_picture();
+		robot.FollowLine();		
+		// for(x pixel) decide which direction to move		
 	}
-		
+	while (quad3) {
+		take_picture();
+		robot.maze();	
+	}	
+}	
