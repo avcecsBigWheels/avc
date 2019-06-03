@@ -295,7 +295,7 @@ int main() {
 		robot.FollowLine();		
 		// for(x pixel) decide which direction to move		
 	}
-	while (true) {
+	while (quad2) {
 		take_picture();
 		robot.maze();	
 	}	
