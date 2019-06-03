@@ -39,8 +39,8 @@ private:
 	const int cam_height = 240;
 	const int v_left_go = 52;
 	const int v_right_go = 43;
-	double kp = 0.0008;
-	double kd = 0.0007;
+	double kp = 0.0009;
+	double kd = 0.0008;
 	bool line_present = true;
 	bool junction;
 	int vertLine [120] = {};
@@ -265,14 +265,14 @@ void Robot::maze() {
 		v_right = 49;
 		v_left = 56;
 		SetMotors();
-		sleep1 (85);
+		sleep1 (115);
 		printf ("Turn Left\n");
 	}
 	else if (junction) {
 		sleep1 (100);
-		v_right = 54;
-		v_left = 50;
-		sleep1 (65);
+		v_right = 49;
+		v_left = 56;
+		sleep1 (115);
 		printf ("Junction\n");
 	}
 	else if (deadEnd) {
@@ -291,7 +291,7 @@ void Robot::maze() {
 		v_right = 49;
 		v_left = 56;
 		SetMotors();
-		sleep1 (85);
+		sleep1 (115);
 		printf ("Turn Left\n");
 	}
 	else if (turnRight) {
@@ -299,7 +299,7 @@ void Robot::maze() {
 		v_right = 39;
 		v_left = 48;
 		SetMotors();
-		sleep1 (85);
+		sleep1 (115);
 		printf ("Turn Right\n");
 	}	
 }
