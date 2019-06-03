@@ -148,6 +148,7 @@ void Robot::MeasureMaze () {
 	for (int i = 120; i < 240; i++) {
 		vertWhiteness += get_pixel (i, 160, 3);
 	}
+	vertWhiteness /= 120;
 	whiteness /= cam_width;
 	
 	//vertical line check
