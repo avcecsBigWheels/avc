@@ -278,16 +278,16 @@ void Robot::maze() {
 	}
 	else if (turnLeft) {
 		sleep1 (100);
-		v_right = 58;
-		v_left = 50;
+		v_right = 47;
+		v_left = 58;
 		SetMotors();
 		sleep1 (100);
 		printf ("Turn Left\n");
 	}
 	else if (turnRight) {
 		sleep1 (100);
-		v_right = 42;
-		v_left = 35;
+		v_right = 35;
+		v_left = 48;
 		SetMotors();
 		sleep1 (75);
 		printf ("Turn Right\n");
