@@ -147,7 +147,7 @@ int Robot::FollowLine () {
 		sleep1 (100);
 	}
 }
-void MeasureColor () {
+void Robot::MeasureColor () {
 	float red = 0;
 	float green = 0;
 	float blue = 0;
