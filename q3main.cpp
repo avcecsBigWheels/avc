@@ -102,7 +102,7 @@ int Robot :: MeasureLine(){
 	}
 	clock_gettime (CLOCK_MONOTONIC, &ts_start);
 	for (int i = 0; i < 320; i++) {
-		if (get_pixel (120, i, 3) > whiteness - 50) {
+		if (get_pixel (120, i, 3) > whiteness - 65) {
 			//line[i] = 1;
 			line = 0;
 	}
@@ -153,7 +153,7 @@ void Robot::MeasureMaze () {
 	
 	//vertical line check
 	for (int i = 120; i < 240; i ++) {
-		if (get_pixel (120, i, 3) > vertWhiteness - 50) {
+		if (get_pixel (120, i, 3) > vertWhiteness - 65) {
 			vertLine[i - 120] = 0;
 		}
 		else {
@@ -164,7 +164,7 @@ void Robot::MeasureMaze () {
 	
 	//horizontal line check
 	for (int i = 0; i < 320; i++) {
-		if (get_pixel (120, i, 3) > whiteness - 50) {
+		if (get_pixel (120, i, 3) > whiteness - 65) {
 			horizLine[i] = 0;
 		}
 		else {
