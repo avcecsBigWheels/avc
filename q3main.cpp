@@ -44,12 +44,11 @@ private:
 	bool line_present = true;
 	bool junction;
 	int vertLine [120] = {};
-	int horiZLine [320] = {};
-	bool vLine
+	int horizLine [320] = {};
+	bool vLine;
 	bool hLine;
-	bool junction;
 	bool deadEnd;
-	bool goStright;
+	bool goStraight;
 public:
 	//Rob () {};    //default constructor
 	int InitHardware ();
@@ -133,6 +132,9 @@ void Robot::MeasureMaze () {
 	
 	vLine = false;
 	hLine = false;
+	bool rLine;
+	bool lLine;
+	
 	
 	int leftLine = 0;
 	int rightLine = 0;
@@ -241,7 +243,7 @@ void Robot::MeasureColor () {
 		quad2 = false;
 		quad3 = true;
 	}
-	if (quad3 && ((red - blue) > 80) {
+	if (quad3 && ((red - blue) > 80)) {
 		endRun = true;
 	}
 }
