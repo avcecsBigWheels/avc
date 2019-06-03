@@ -265,7 +265,7 @@ void Robot::maze() {
 		v_right = 49;
 		v_left = 56;
 		SetMotors();
-		sleep1 (65);
+		sleep1 (85);
 		printf ("Turn Left\n");
 	}
 	else if (junction) {
@@ -291,7 +291,7 @@ void Robot::maze() {
 		v_right = 49;
 		v_left = 56;
 		SetMotors();
-		sleep1 (65);
+		sleep1 (85);
 		printf ("Turn Left\n");
 	}
 	else if (turnRight) {
@@ -299,7 +299,7 @@ void Robot::maze() {
 		v_right = 39;
 		v_left = 48;
 		SetMotors();
-		sleep1 (65);
+		sleep1 (85);
 		printf ("Turn Right\n");
 	}	
 }
