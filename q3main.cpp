@@ -181,8 +181,8 @@ void Robot::MeasureMaze () {
 	}
 	hLine = lineH > 60;
 	vLine = lineV > 10;
-	lLine = leftLine > 50;
-	rLine = rightLine > 50;
+	lLine = leftLine > 70;
+	rLine = rightLine > 70;
 	goStraight = ((lLine && !rLine) || (!lLine && rLine)) && lineV > 35;
 	junction = lineV > 30 && lineH > 140;
 	deadEnd = lineH < 20 && lineV < 20;
