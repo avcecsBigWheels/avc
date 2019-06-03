@@ -50,6 +50,8 @@ private:
 	bool deadEnd;
 	bool goStraight;
 	bool nextQuad = true;
+	bool turnLeft;
+	bool turnRight;
 public:
 	//Rob () {};    //default constructor
 	int InitHardware ();
@@ -184,6 +186,10 @@ void Robot::MeasureMaze () {
 	lLine = leftLine > 70;
 	rLine = rightLine > 70;
 	goStraight = ((lLine && !rLine) || (!lLine && rLine)) && lineV > 35;
+	if (!goStraight) {
+		turnLeft = leftLine > 70;
+		turnRight = rightLine > 70;
+	}
 	junction = lineV > 65 && lineH > 140;
 	deadEnd = lineH < 5 && lineV < 5;
 	printf ("Vertical Amnt: %d\nHorizontal Amnt: %d\n", lineV, lineH);
@@ -267,6 +273,18 @@ void Robot::maze() {
 	else if (goStraight) {
 		goForward();
 		printf ("Go forward\n");
+	}
+	else if (turnLeft) {
+		sleep1 (100);
+		v_right = 58;
+		v_left = 54;
+		sleep1 (75);
+	}
+	else if (turnRight) {
+		sleep1 (100);
+		v_right = 44;
+		v_left = 40;
+		sleep1 (75);
 	}
 	else {
 		FollowLine();	
