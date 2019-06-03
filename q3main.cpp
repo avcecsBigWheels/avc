@@ -280,6 +280,7 @@ void Robot::maze() {
 		sleep1 (100);
 		v_right = 58;
 		v_left = 50;
+		SetMotors();
 		sleep1 (100);
 		printf ("Turn Left\n");
 	}
@@ -287,6 +288,7 @@ void Robot::maze() {
 		sleep1 (100);
 		v_right = 42;
 		v_left = 35;
+		SetMotors();
 		sleep1 (75);
 		printf ("Turn Right\n");
 	}
