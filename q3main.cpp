@@ -49,7 +49,7 @@ private:
 	bool hLine;
 	bool deadEnd;
 	bool goStraight;
-	bool endRun;
+	bool switch = true;
 public:
 	//Rob () {};    //default constructor
 	int InitHardware ();
@@ -239,11 +239,12 @@ void Robot::MeasureColor () {
 	green /= 6400;
 	blue /= 6400;
 
-	if ((red - blue) > 80) {
+	if (((red - blue) > 80) && switch) {
 		quad2 = false;
 		quad3 = true;
 		printf("Next quadrant \n");
 		sleep1 (2000);
+		switch = false;
 	}	
 }
 void Robot::maze() {
