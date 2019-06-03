@@ -156,8 +156,6 @@ void Robot::MeasureMaze () {
 		}
 		else {
 			vertLine [i - 120] = 1;
-			line_present = true;
-			vLine = true;
 		}
 		lineV += vertLine [i - 120];
 	}
@@ -170,7 +168,6 @@ void Robot::MeasureMaze () {
 		else {
 			horizLine[i] = 1; 
 			line_present = true;
-			hLine = true;
 		}
 		if (i > 160) {
 			leftLine += horizLine [i];
@@ -261,14 +258,14 @@ void Robot::maze() {
 		sleep1 (500);
 	}
 	else if (deadEnd) {
-		v_right = v_left_go;
-		v_left = v_right_go;
+		v_right = 63;
+		v_left = 47;
 		SetMotors();
-		sleep1 (1000);
+		sleep1 (500);
 	}
 	else if (goStraight) {
-		//goForward();
-		//sleep1 (1500);
+		goForward();
+		sleep1 (1000);
 	}
 }
 
