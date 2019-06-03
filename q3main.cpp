@@ -50,7 +50,6 @@ private:
 	bool deadEnd;
 	bool goStraight;
 	bool endRun;
-	bool turn;
 public:
 	//Rob () {};    //default constructor
 	int InitHardware ();
@@ -115,9 +114,6 @@ int Robot :: MeasureLine(){
 		//line_error += line[i] * (i - ((cam_width - 1) / 2));
 		line_error += (double)(line * (i - 159.5));
 		double centre = i - 159.5;
-		printf ("Line: %d\n", line);
-		printf ("Centre: %.2f\n", centre);
-		printf ("Line Error!!!!: %d\n", line_error);
 	}	
 	clock_gettime (CLOCK_MONOTONIC, &ts_end);	
 	return 0;
@@ -182,7 +178,6 @@ void Robot::MeasureMaze () {
 	vLine = lineV > 20;
 	lLine = leftLine > 30;
 	rLine = rightLine > 30;
-	turn = rLine || lLine;
 	goStraight = ((lLine && !rLine) || (!lLine && rLine));
 	junction = vLine && hLine;
 	deadEnd = !(vLine || hLine);
@@ -212,8 +207,6 @@ int Robot::FollowLine () {
 			v_right = 30;
 		}
 		previous_line_error = line_error;
-		printf ("Error: %d\n", error);
-		printf ("V_left: %d\nV_right: %d\n", v_left, v_right);
 		SetMotors ();
 	}
 	else {
@@ -250,32 +243,35 @@ void Robot::MeasureColor () {
 void Robot::maze() {
 	MeasureColor();
 	MeasureMaze();
-	if ((!(junction || deadEnd || goStraight)) || turn) {
-		FollowLine();
-	}
-	else if (junction) {
-		sleep1 (250);
-		v_right = v_right_go + 5;
-		v_left = v_left_go + 6;
+	if (junction) {
+		sleep1 (150);
+		v_right = v_right_go + 8;
+		v_left = v_left_go + 9;
 		sleep1 (500);
+		printf ("Junction\n");
 	}
 	else if (deadEnd) {
 		v_right = 63;
 		v_left = 47;
 		SetMotors();
-		sleep1 (500);
+		sleep1 (375);
+		printf ("DeadEnd\n");
 	}
 	else if (goStraight) {
 		goForward();
-		sleep1 (1000);
+		sleep1 (625);
+		printf ("Go forward\n");
+	}
+	else {
+		FollowLine();	
+		printf ("Follow Line\n");
 	}
 }
 
 int main() {
 	Robot robot;
-	printf("Program Started..");
 	
-	init(1); // set to 1 for debug messages, 0 for final release.
+	init(0); // set to 1 for debug messages, 0 for final release.
 	open_screen_stream();
 	
 	//char ip[24] = {'1','3','0','.','1','9','5','.','6','.','1','9','6'};
