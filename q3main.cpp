@@ -49,6 +49,7 @@ private:
 	bool hLine;
 	bool deadEnd;
 	bool goStraight;
+	bool endRun;
 public:
 	//Rob () {};    //default constructor
 	int InitHardware ();
