@@ -39,6 +39,8 @@ private:
 	double kp = 0.0008;
 	double kd = 0.0007;
 	bool line_present = true;
+	bool quad2 = true;
+	bool quad3 = false;
 public:
 	//Rob () {};    //default constructor
 	int InitHardware ();
@@ -46,6 +48,7 @@ public:
 	int MeasureLine ();
 	int FollowLine ();
 	void goForward();
+	void MeasureColor();
 	//int forward(int speed);
 };
 
@@ -78,30 +81,14 @@ int Robot :: MeasureLine(){
 	//int line [cam_width] = {};
 	take_picture();
 	int line;
-	int count = 0; 
-	int junction = 0;
 	line_error = 0;
 	float whiteness = 0;
-	float vertWhiteness = 0;
 	line_present = false;
 	for (int i = 0; i < 320; i++) {
 		whiteness += get_pixel (cam_height/2, i, 3);
 	}
 	whiteness /= cam_width;
-	for (int i = 0; i < 320; i++) {
-		vertWhiteness += get_pixel (cam_height/2, i, 3);
-	}
-	vertWhiteness /= cam_width;
 	clock_gettime (CLOCK_MONOTONIC, &ts_start);
-	for (int i = 0; i < 240; i++) {
-		if (get_pixel (i, 160, 3) > whiteness - 15) {
-			line = 0;
-		}
-		else {
-			line = 1;
-			line_present = true;
-			count ++;
-		}
 	for (int i = 0; i < 320; i++) {
 		if (get_pixel (120, i, 3) > whiteness - 15) {
 			//line[i] = 1;
@@ -111,7 +98,6 @@ int Robot :: MeasureLine(){
 			//line[i] = 0; 
 			line = 1;
 			line_present = true;
-			count ++;
 		}
 		//line_error += line[i] * (i - ((cam_width - 1) / 2));
 		line_error += (double)(line * (i - 159.5));
@@ -119,20 +105,14 @@ int Robot :: MeasureLine(){
 		printf ("Line: %d\n", line);
 		printf ("Centre: %.2f\n", centre);
 		printf ("Line Error!!!!: %d\n", line_error);
-	}
-	if (count > 100 && count < 200) {
-		junction = 1;
-	}
-	if (count <= 200 && count <= 320) {
-		junction = 2;
-	}
-	
-	clock_gettime (CLOCK_MONOTONIC, &ts_end);
+	}	
+	clock_gettime (CLOCK_MONOTONIC, &ts_end);	
 	return 0;
 }
 int Robot::FollowLine () {
 	 
-	MeasureLine ();	
+	MeasureColor ();
+	MeasureLine ();		
 	if (line_present) {
 		dv = (line_error * kp);
 		de = (line_error - previous_line_error);
@@ -167,6 +147,20 @@ int Robot::FollowLine () {
 		sleep1 (100);
 	}
 }
+void MeasureColor () {
+	float red = 0;
+	float green = 0;
+	float blue = 0;
+	for (int i = 120; i < 200; i ++) {
+		for (int k = 80; k < 160; k ++) {
+			red += (float) (get_pixel (k, i, 0));	
+			green += (float) (get_pixel (k, i, 1));	
+			blue += (float) (get_pixel (k, i, 2));	
+		}
+	}
+	printf ("Red: %f\nGreen: %f\nBlue: %f\n", red, green, blue);
+	sleep1 (3000);
+}
 
 int main() {
 	Robot robot;
@@ -175,18 +169,18 @@ int main() {
 	init(1); // set to 1 for debug messages, 0 for final release.
 	open_screen_stream();
 	
-	char ip[24] = {'1','3','0','.','1','9','5','.','6','.','1','9','6'};
-    	connect_to_server(ip,1024);
-	char message[24] = {'P','l','e','a','s','e'};
-	send_to_server(message);
-	receive_from_server(message);
-	send_to_server(message);// literally a ping pong
+	//char ip[24] = {'1','3','0','.','1','9','5','.','6','.','1','9','6'};
+    	//connect_to_server(ip,1024);
+	//char message[24] = {'P','l','e','a','s','e'};
+	//send_to_server(message);
+	//receive_from_server(message);
+	//send_to_server(message);// literally a ping pong
 	
-	robot.goForward();
-	sleep1(2000);
+	//robot.goForward();
+	//sleep1(3000);
 	
 	
-	while(true){ // sets up a loop for the rest of our stuff to be in
+	while(quad2){ // sets up a loop for the rest of our stuff to be in
 		// this should call camera to take a ss.
 		robot.FollowLine();
 		
