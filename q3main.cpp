@@ -105,7 +105,7 @@ int Robot :: MeasureLine(){
 	}
 	clock_gettime (CLOCK_MONOTONIC, &ts_start);
 	for (int i = 0; i < 320; i++) {
-		if (get_pixel (120, i, 3) > whiteness - 80) {
+		if (get_pixel (120, i, 3) > whiteness - 15) {
 			//line[i] = 1;
 			line = 0;
 	}
@@ -157,7 +157,7 @@ void Robot::MeasureMaze () {
 	
 	//vertical line check
 	for (int i = 120; i < 240; i ++) {
-		if (get_pixel (120, i, 3) > vertWhiteness - 20) {
+		if (get_pixel (120, i, 3) > vertWhiteness - 15) {
 			vertLine[i - 120] = 0;
 		}
 		else {
@@ -168,7 +168,7 @@ void Robot::MeasureMaze () {
 	
 	//horizontal line check
 	for (int i = 0; i < 320; i++) {
-		if (get_pixel (120, i, 3) > whiteness - 80) {
+		if (get_pixel (120, i, 3) > whiteness - 15) {
 			horizLine[i] = 0;
 		}
 		else {
@@ -187,17 +187,16 @@ void Robot::MeasureMaze () {
 	vLine = lineV > 10;
 	lLine = leftLine > 70;
 	rLine = rightLine > 70;
-	if (lineV > 20 && (leftLine > 30 && rightLine < 30 || rightLine > 30 && leftLine < 30)) {
+	if (lineV > 20 && (leftLine > 80 && rightLine < 80 || rightLine > 80 && leftLine < 80)) {
 		follow = true;
 	}
 	goStraight = ((lLine && !rLine) || (!lLine && rLine)) && lineV > 35;
 	if (lineV < 5) {
-		turnLeft = leftLine > 20;			
-		turnRight = rightLine > 20;
+		turnLeft = leftLine > 80;			
+		turnRight = rightLine > 80;
 	}
 	junction = lineV > 65 && lineH > 140;
 	deadEnd = lineH < 5 && lineV < 5;
-	printf ("Vertical Amnt: %d\nHorizontal Amnt: %d\n", lineV, lineH);
 }
 int Robot::FollowLine () {
 	 
@@ -254,7 +253,6 @@ void Robot::MeasureColor () {
 		quad2 = false;
 		quad3 = true;
 		printf("Next quadrant \n");
-		sleep1 (2000);
 		nextQuad = false;
 	}	
 }
