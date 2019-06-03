@@ -181,8 +181,8 @@ void Robot::MeasureMaze () {
 	}
 	hLine = lineH > 60;
 	vLine = lineV > 10;
-	lLine = leftLine > 30;
-	rLine = rightLine > 30;
+	lLine = leftLine > 50;
+	rLine = rightLine > 50;
 	goStraight = ((lLine && !rLine) || (!lLine && rLine));
 	junction = vLine && hLine;
 	deadEnd = !(vLine || hLine);
@@ -258,7 +258,7 @@ void Robot::maze() {
 	}
 	else if (deadEnd) {
 		v_right = 58;
-		v_left = 40;
+		v_left = 54;
 		SetMotors();
 		sleep1 (300);
 		printf ("DeadEnd\n");
