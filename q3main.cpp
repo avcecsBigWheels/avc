@@ -155,7 +155,7 @@ void Robot::MeasureMaze () {
 	
 	//vertical line check
 	for (int i = 120; i < 240; i ++) {
-		if (get_pixel (120, i, 3) > vertWhiteness - 65) {
+		if (get_pixel (120, i, 3) > vertWhiteness - 40) {
 			vertLine[i - 120] = 0;
 		}
 		else {
@@ -257,10 +257,10 @@ void Robot::maze() {
 	MeasureColor();
 	MeasureMaze();
 	if (junction) {
-		sleep1 (150);
+		sleep1 (100);
 		v_right = 58;
-		v_left = 50;
-		sleep1 (300);
+		v_left = 54;
+		sleep1 (100);
 		printf ("Junction\n");
 	}
 	else if (deadEnd) {
@@ -285,7 +285,7 @@ void Robot::maze() {
 		sleep1 (100);
 		v_right = 44;
 		v_left = 37;
-		sleep1 (100);
+		sleep1 (75);
 		printf ("Turn Right\n");
 	}
 	else {
