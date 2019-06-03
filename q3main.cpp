@@ -87,7 +87,7 @@ void Robot::SetMotors () {
 
 void Robot::goForward () {
 	set_motors (1, 43);
-	set_motors (5, 54); //63
+	set_motors (5, 53); //63
 	hardware_exchange();
 }
 
@@ -261,18 +261,18 @@ void Robot::maze() {
 		FollowLine ();
 	}
 	else if (goStraight && turnLeft) {
-		sleep1 (100);
+		sleep1 (75);
 		v_right = 49;
 		v_left = 56;
 		SetMotors();
-		sleep1 (200);
+		sleep1 (190);
 		printf ("Turn Left\n");
 	}
 	else if (junction) {
-		sleep1 (100);
+		sleep1 (75);
 		v_right = 49;
 		v_left = 56;
-		sleep1 (200);
+		sleep1 (190);
 		printf ("Junction\n");
 	}
 	else if (deadEnd) {
@@ -287,19 +287,19 @@ void Robot::maze() {
 		printf ("Go forward\n");
 	}
 	else if (turnLeft) {
-		sleep1 (100);
+		sleep1 (75);
 		v_right = 49;
 		v_left = 56;
 		SetMotors();
-		sleep1 (200);
+		sleep1 (190);
 		printf ("Turn Left\n");
 	}
 	else if (turnRight) {
-		sleep1 (100);
+		sleep1 (75);
 		v_right = 39;
 		v_left = 48;
 		SetMotors();
-		sleep1 (180);
+		sleep1 (1700);
 		printf ("Turn Right\n");
 	}	
 }
