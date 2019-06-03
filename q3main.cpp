@@ -158,6 +158,9 @@ void Robot::MeasureColor () {
 			blue += (float) (get_pixel (k, i, 2));	
 		}
 	}
+	red /= 6400;
+	green /= 6400;
+	blue /= 6400;
 	printf ("Red: %f\nGreen: %f\nBlue: %f\n", red, green, blue);
 	sleep1 (3000);
 }
