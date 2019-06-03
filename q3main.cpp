@@ -18,6 +18,8 @@
 int motorOne = 1;
 int motorTwo = 5;
 int fixedSpeed = 63;
+bool quad2 = true;
+bool quad3 = false;
 
 class Robot {  
 private:
@@ -38,9 +40,7 @@ private:
 	const int v_right_go = 43;
 	double kp = 0.0008;
 	double kd = 0.0007;
-	bool line_present = true;
-	bool quad2 = true;
-	bool quad3 = false;
+	bool line_present = true;	
 public:
 	//Rob () {};    //default constructor
 	int InitHardware ();
