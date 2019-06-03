@@ -87,7 +87,7 @@ void Robot::SetMotors () {
 
 void Robot::goForward () {
 	set_motors (1, 43);
-	set_motors (5, 52); //63
+	set_motors (5, 54); //63
 	hardware_exchange();
 }
 
@@ -187,7 +187,7 @@ void Robot::MeasureMaze () {
 	vLine = lineV > 10;
 	lLine = leftLine > 85;
 	rLine = rightLine > 85;
-	if ((lineV > 20 && (leftLine > 80 && rightLine < 80 || rightLine > 80 && leftLine < 80)) || (lineV > 20 && lineH < 40)) {
+	if ((lineV > 10 && (leftLine > 80 && rightLine < 80 || rightLine > 80 && leftLine < 80)) || (lineV > 10 && lineH < 40)) {
 		follow = true;
 	}
 	goStraight = lineV > 35 && lineH < 100;
