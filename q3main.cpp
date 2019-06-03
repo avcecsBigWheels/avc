@@ -52,6 +52,7 @@ private:
 	bool nextQuad = true;
 	bool turnLeft;
 	bool turnRight;
+	bool follow;
 public:
 	//Rob () {};    //default constructor
 	int InitHardware ();
@@ -134,6 +135,7 @@ void Robot::MeasureMaze () {
 	hLine = false;
 	bool rLine;
 	bool lLine;
+	follow = false;	
 	
 	
 	int leftLine = 0;
@@ -155,7 +157,7 @@ void Robot::MeasureMaze () {
 	
 	//vertical line check
 	for (int i = 120; i < 240; i ++) {
-		if (get_pixel (120, i, 3) > vertWhiteness - 40) {
+		if (get_pixel (120, i, 3) > vertWhiteness - 20) {
 			vertLine[i - 120] = 0;
 		}
 		else {
@@ -185,6 +187,9 @@ void Robot::MeasureMaze () {
 	vLine = lineV > 10;
 	lLine = leftLine > 70;
 	rLine = rightLine > 70;
+	if (lineV > 20 && (leftLine > 30 && rightLine < 30 || rightLine > 30 && leftLine < 30) {
+		follow = true;
+	}
 	goStraight = ((lLine && !rLine) || (!lLine && rLine)) && lineV > 35;
 	if (!goStraight && lineV < 5) {
 		turnLeft = leftLine > 20;
@@ -258,7 +263,10 @@ void Robot::MeasureColor () {
 void Robot::maze() {
 	MeasureColor();
 	MeasureMaze();
-	if (junction) {
+	if (follow){
+		FollowLine ();
+	}
+	else if (junction) {
 		sleep1 (100);
 		v_right = 58;
 		v_left = 54;
@@ -291,11 +299,7 @@ void Robot::maze() {
 		SetMotors();
 		sleep1 (75);
 		printf ("Turn Right\n");
-	}
-	else {
-		FollowLine();	
-		printf ("Follow Line\n");
-	}
+	}	
 }
 
 int main() {
