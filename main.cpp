@@ -138,9 +138,9 @@ int Robot::FollowLine () {
 		// go back
 		//cout << " Line missing " << endl;
 		v_left = 44;
-		v_right = 50;
+		v_right = 51;
 		SetMotors ();
-		sleep1 (275);
+		sleep1 (425);
 	}
 }
 
