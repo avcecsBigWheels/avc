@@ -36,8 +36,8 @@ private:
 	const int cam_height = 240;
 	const int v_left_go = 52;
 	const int v_right_go = 43;
-	double kp = 0.0008;
-	double kd = 0.0007;
+	double kp = 0.00095;
+	double kd = 0.00085;
 	bool line_present = true;
 public:
 	//Rob () {};    //default constructor
@@ -138,9 +138,9 @@ int Robot::FollowLine () {
 		// go back
 		//cout << " Line missing " << endl;
 		v_left = 44;
-		v_right = 53;
+		v_right = 50;
 		SetMotors ();
-		sleep1 (100);
+		sleep1 (275);
 	}
 }
 
