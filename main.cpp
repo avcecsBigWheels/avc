@@ -149,7 +149,7 @@ int main() {
 	printf("Program Started..");
 	
 	init(1); // set to 1 for debug messages, 0 for final release.
-	/*
+	
 	open_screen_stream();
 	
 	char ip[24] = {'1','3','0','.','1','9','5','.','6','.','1','9','6'};
@@ -158,7 +158,6 @@ int main() {
 	send_to_server(message);
 	receive_from_server(message);
 	send_to_server(message);// literally a ping pong
-	*/
 	
 	robot.goForward();
 	sleep1(750);
