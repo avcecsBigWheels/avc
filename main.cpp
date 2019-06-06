@@ -151,15 +151,15 @@ int main() {
 	init(1); // set to 1 for debug messages, 0 for final release.
 	open_screen_stream();
 	
-	//char ip[24] = {'1','3','0','.','1','9','5','.','6','.','1','9','6'};
-    	//connect_to_server(ip,1024);
-	//char message[24] = {'P','l','e','a','s','e'};
-	//send_to_server(message);
-	//receive_from_server(message);
-	//send_to_server(message);// literally a ping pong
+	char ip[24] = {'1','3','0','.','1','9','5','.','6','.','1','9','6'};
+    	connect_to_server(ip,1024);
+	char message[24] = {'P','l','e','a','s','e'};
+	send_to_server(message);
+	receive_from_server(message);
+	send_to_server(message);// literally a ping pong
 	
-	//robot.goForward();
-	//sleep1(3000);
+	robot.goForward();
+	sleep1(750);
 	
 	
 	while(true){ // sets up a loop for the rest of our stuff to be in
