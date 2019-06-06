@@ -160,7 +160,7 @@ int main() {
 	send_to_server(message);// literally a ping pong
 	
 	robot.goForward();
-	sleep1(750);
+	sleep1(425);
 	
 	
 	while(true){ // sets up a loop for the rest of our stuff to be in
